@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/"><button>Back to Search</button></a>
+    <h1>Movies List</h1>
+
+    <% for (let m of moviesList) { %>
+        <div>
+            <h3>Title: <%= m.Title %></h3>
+            <h3>Year: <%= m.Year %></h3>
+            <a href="/movie/<%= m.imdbID %>"><button>See Movie Details</button></a><br/>
+            <img src="<%= m.Poster %>">
+        </div>
+    <% } %>
+
+</body>
+</html>

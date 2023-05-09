@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Movies List</title>
+</head>
+<body>
+    <a href="/"><button>Back to Search Home Page</button></a>
+    <h1>My Favorite Movies List</h1>
+
+    <ul>
+        <% for (let m of moviesList) { %>
+
+            <!-- We need to save the imdbID of the movie to our database to access that property for the line below to work -->
+            <%# <li>Title: <a href="/movie/< m.imdbID >">< m.Title %></a></li><br> %>
+            <li>Title: <%= m.Title %></li><br>
+            <!-- DELETE /movie/:id -->
+            <!-- Here, we want the MongoDB id -> _id -->
+            <form action="/movie/<%= m._id %>?_method=DELETE" method="POST">
+                <button>Remove from Favorites List</button>
+            </form><br>
+        <% } %>
+    </ul>
+
+</body>
+</html>

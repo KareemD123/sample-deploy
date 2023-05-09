@@ -1,0 +1,94 @@
+Plan our User Stories, Features, Data Model
+
+User Stories:
+    1. As a User, I want to be able to type a movie name and search for that movie
+    2. As a User, I want to be able to see a list of all the movies that match my search
+    3. As a User, I want to see the details of a single movie by clicking on it
+    4. As a User, I want to be able to add (and remove) a movie to my favorites (database)
+    
+Development Plan:
+    1 & 2. Type Movie Name and Search for Movie
+        - searchPage.ejs -> Display search bar for user to type
+            - <Form> -> To capture use search
+            - Form Action -> POST /movieSearch
+        - movieRouter -> Forward the request to apropriate controller function
+        - movieController -> handle the API movie search, and display the movie list
+            - fetchMoviesList()
+            - displayMovieSearchPage()
+        - moviesList.ejs -> Display all movies from user's query
+
+    3.  Click on Movie and see details
+        - Add a button (<a href) for each movie in moviesList.ejs -> route it to include the movie ID 
+        - Create a route to match the button and attach it to a fetchMovieDetail function
+        - Define fetchMovieDetail function in the controller
+            - Make another API call with the ID of the movie
+            - Pass the data on to a movieDetail.ejs page
+        - Display Movie Detail on movieDetail.ejs page
+
+    4. Add/Remove Movie from our 'favorites' list (database)
+        - Create a Movie Model to be used for saving movies to our database
+        - Add a button (Form) on the detail page to add a movie to our favorites list
+            - The button will include the movie ID in its action attribute
+            - Route: POST /movie/:id
+        - Create a route to match that button 
+        - Create a controller to add movie to favorites
+            - addMovieToFavorites()
+            - Make an API Call using the imdbID to fetch the details of movie
+            - Create movie object we want to save to our favorites (database)
+            - Use mongoose to Create and Save new object to our favorites (database)
+            - Redirect to GET /favoriteMoviesList 
+
+    Create the following features:
+
+        - Create route & controller & ejs -> GET /favoriteMoviesList -> Fetch all movies from the database and display the movies on favoriteMoviesList.ejs
+
+        - Remove movie from favorites list
+            - Create button (form) to delete -> DELETE /movie/:id
+            - Create Route 
+            - Create Controller
+
+        
+
+
+
+
+---------------------------------------------------------------------------------
+
+
+User Stories:
+    1. As a User, I want to be able to login with my google account
+    2. As a User, I want to add a movie to my (the User's) favoritesList
+    3. As a User, I want to see all the movies in my favoritesList
+    4. As a User, I want to be able to remove a movie from my favoritesList
+    5. As a User, I want to be able to *create* a movie and add it to my favoritesList
+    6. As a User, I want to be able to update a movie in my favoritesList
+
+Development Plan:
+    1. Implement Google OAuth*
+        - Register our environment variables (.env)
+        - Install and mount session & passport middleware
+        - Configure our passport middleware 
+            - Use Google Strategy
+            - Verify callback function
+            - serialize & deserialize
+        - Add login/logout/callback routes & update EJS HTML navbar
+
+    2 & 3. (Assuming we have access to the req.user object, i.e. the user that is currently logged in) Add a feature to save a movie to a user's favoritesList
+        - Re-route the existing add to my favorites button
+        - Rename our existing route/controller for favorites
+        - Re-write our addMovieToFavorites controller to behave as an addMovieToUserFavorites
+        - Redirect to home page (later be a user favorites list page)
+
+    4. Remove movie from favoritesList
+
+    5. Create movie and add to favoritesList
+        - Separate page with movie form (matching the movie model)
+        - createMovie controller that takes data from form and adds a new movie to the database and adds the new movie to your favoriteMoviesList
+        - redirect to your favorite movies list page
+
+    6. Update a movie 
+        - Another form on a separate page to update movie 
+        - This feature is almost identical to the create feature
+        - Use the findByIdAndUpdate mongoose method
+
+
